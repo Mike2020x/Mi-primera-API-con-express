@@ -36,13 +36,13 @@ function handleDeleteData(req, res) {
 }
 function handleCreateData(req, res) {
   const data = req.body;
-  const record = createData(data);
 
   if (!data.name || !data.number) {
     return res.status(400).json({
       error: "name or number is missing",
     });
   }
+
   const records = getAllData();
   const existingRecord = records.find((record) => record.name === data.name);
 
@@ -51,7 +51,9 @@ function handleCreateData(req, res) {
       error: "name must be unique",
     });
   }
-  return res.status(201).json(data);
+
+  const record = createData(data);
+  return res.status(201).json(record);
 }
 
 function handleUpdateData(req, res) {
